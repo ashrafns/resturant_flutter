@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:returant_flutter/utils/app_constants.dart';
 
 class ApiClient extends GetConnect implements GetxService {
   late String token;
@@ -8,6 +9,7 @@ class ApiClient extends GetConnect implements GetxService {
   ApiClient({required this.appBaseUrl}) {
     baseUrl = appBaseUrl;
     timeout = Duration(seconds: 30);
+    token = AppConstants.TOKEN;
 
     _mainHeaders = {
       'Content-type': 'application/json; charset=UTF-8',
@@ -21,7 +23,7 @@ class ApiClient extends GetConnect implements GetxService {
       Response response = await get(uri);
       return response;
     } catch (e) {
-      return Response(statusCode: 1,statusText: e.toString());
+      return Response(statusCode: 1, statusText: e.toString());
     }
   }
 }

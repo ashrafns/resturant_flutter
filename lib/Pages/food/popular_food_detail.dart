@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:returant_flutter/Pages/home/main_food_page.dart';
+import 'package:returant_flutter/controllers/popular_product_controller.dart';
+import 'package:returant_flutter/utils/app_constants.dart';
 import 'package:returant_flutter/utils/dimensions.dart';
 import 'package:returant_flutter/widgets/app_icon.dart';
 import 'package:returant_flutter/widgets/exandable_text_widget.dart';
@@ -10,10 +14,15 @@ import '../../widgets/icon_and_text_widget.dart';
 import '../../widgets/small_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({super.key});
+  int pageId;
+  PopularFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var prooduct =
+        Get.find<PopularProductController>().popularProductList[pageId];
+    // print("ashraf  " + pageId.toString());
+    // print("ashraf  " + prooduct.name.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -28,7 +37,9 @@ class PopularFoodDetail extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/image/download (2).jfif'),
+                  image: NetworkImage(AppConstants.BASE_URL +
+                      AppConstants.UPLOAD_URL +
+                      prooduct.img!),
                 ),
               ),
             ),
@@ -41,7 +52,11 @@ class PopularFoodDetail extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.arrow_back_ios),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => MainFoodPage());
+                    },
+                    child: AppIcon(icon: Icons.arrow_back_ios)),
                 AppIcon(icon: Icons.shopping_cart_outlined),
               ],
             ),
@@ -67,15 +82,13 @@ class PopularFoodDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppColumn(text: 'Chinese Side'),
+                  AppColumn(text: prooduct.name!),
                   SizedBox(height: Dimensions.height20),
                   BigText(text: 'Introduce'),
                   SizedBox(height: Dimensions.height20),
                   Expanded(
                     child: SingleChildScrollView(
-                      child: ExpandableTextWidget(
-                          text:
-                              "There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story"),
+                      child: ExpandableTextWidget(text: prooduct.description!),
                     ),
                   )
                 ],
@@ -131,7 +144,7 @@ class PopularFoodDetail extends StatelessWidget {
               right: Dimensions.width20,
             ),
             child: BigText(
-              text: '\$10 | Add to cart',
+              text: '\$${prooduct.price!}' + ' | Add to cart',
               color: Colors.white,
             ),
             decoration: BoxDecoration(

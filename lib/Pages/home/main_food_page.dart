@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:returant_flutter/utils/dimensions.dart';
-import 'package:returant_flutter/widgets/big_text.dart';
-
+import '../../utils/dimensions.dart';
+import '../../widgets/big_text.dart';
 import '../../utils/colors.dart';
 import '../../widgets/small_text.dart';
 import 'food_page_body.dart';
@@ -16,7 +15,6 @@ class MainFoodPage extends StatefulWidget {
 class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size.height.toString());
 
     return Scaffold(
       body: Column(

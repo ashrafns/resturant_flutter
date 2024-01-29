@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:returant_flutter/utils/colors.dart';
-import 'package:returant_flutter/utils/dimensions.dart';
-import 'package:returant_flutter/widgets/big_text.dart';
-import 'package:returant_flutter/widgets/exandable_text_widget.dart';
-
+import 'package:get/get.dart';
+import 'package:returant_flutter/controllers/recommended_product_controller.dart';
+import 'package:returant_flutter/routes/route_helper.dart';
+import '../../utils/app_constants.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/big_text.dart';
+import '../../widgets/exandable_text_widget.dart';
 import '../../widgets/app_icon.dart';
 
 class RecommenedfoodDtetail extends StatelessWidget {
-  const RecommenedfoodDtetail({super.key});
+  int pageId;
+  RecommenedfoodDtetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var prooduct =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
+    print(prooduct);
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(slivers: [
         SliverAppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: 90,
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            AppIcon(icon: Icons.clear),
+            GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteHeloer.getInitial());
+                },
+                child: AppIcon(icon: Icons.clear)),
             AppIcon(icon: Icons.shopping_cart_outlined),
           ]),
           bottom: PreferredSize(
@@ -26,7 +38,7 @@ class RecommenedfoodDtetail extends StatelessWidget {
             child: Container(
               child: Center(
                   child:
-                      BigText(size: Dimensions.font26, text: 'Silver App Bar')),
+                      BigText(size: Dimensions.font26, text: prooduct.name!)),
               width: double.maxFinite,
               padding: EdgeInsets.only(top: 5, bottom: 18),
               decoration: BoxDecoration(
@@ -42,8 +54,8 @@ class RecommenedfoodDtetail extends StatelessWidget {
           backgroundColor: AppColors.yelloowColor,
           expandedHeight: 300,
           flexibleSpace: FlexibleSpaceBar(
-            background: Image.asset(
-              'assets/image/download (3).jfif',
+            background: Image.network(
+              AppConstants.BASE_URL + AppConstants.UPLOAD_URL + prooduct.img!,
               width: double.maxFinite,
               fit: BoxFit.cover,
             ),
@@ -54,9 +66,7 @@ class RecommenedfoodDtetail extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-                child: ExpandableTextWidget(
-                    text:
-                        "There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story There’s lots of info out there on how to cook rice — perhaps because it's such a simple and inexpensive staple. But the back of the rice package says one thing about how to cook it, and your favorite blog says something else. Good news — you've landed on our tried-and-tested guide. We'll walk you through all the different ways to make different varieties of rice, and ensure it never comes out mushy, gummy, or burnt. Looking to cook brown rice specifically? Check out our story "),
+                child: ExpandableTextWidget(text: prooduct.description!),
               ),
             ],
           ),
@@ -79,7 +89,7 @@ class RecommenedfoodDtetail extends StatelessWidget {
                   icon: Icons.remove,
                 ),
                 BigText(
-                  text: '\$12.880 ' + ' X ' + ' 0',
+                  text: '\$${prooduct.price!} ' + ' X ' + ' 0',
                   color: AppColors.mainBlackColor,
                   size: Dimensions.font26,
                 ),
@@ -133,7 +143,7 @@ class RecommenedfoodDtetail extends StatelessWidget {
                       right: Dimensions.width20,
                     ),
                     child: BigText(
-                      text: '\$10 | Add to cart',
+                      text: '\$${prooduct.price!}' + '| Add to cart',
                       color: Colors.white,
                     ),
                     decoration: BoxDecoration(
