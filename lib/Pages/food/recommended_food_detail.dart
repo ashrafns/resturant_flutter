@@ -10,10 +10,12 @@ import '../../utils/dimensions.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/exandable_text_widget.dart';
 import '../../widgets/app_icon.dart';
+import '../cart/cart_page.dart';
 
 class RecommenedfoodDtetail extends StatelessWidget {
   int pageId;
-  RecommenedfoodDtetail({super.key, required this.pageId});
+  String page;
+  RecommenedfoodDtetail({super.key, required this.pageId,required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -32,41 +34,50 @@ class RecommenedfoodDtetail extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             GestureDetector(
                 onTap: () {
-                  Get.toNamed(RouteHeloer.getInitial());
+                   if (page == "cartpage") {
+                      Get.toNamed(RouteHeloer.getCartPage());
+                    } else {
+                      Get.toNamed(RouteHeloer.getInitial());
+                    }
                 },
                 child: AppIcon(icon: Icons.clear)),
             // AppIcon(icon: Icons.shopping_cart_outlined),
             GetBuilder<PopularProductController>(builder: (Controller) {
-              return Stack(
-                children: [
-                  AppIcon(icon: Icons.shopping_cart_outlined),
-                  Get.find<PopularProductController>().totalItems >= 1
-                      ? Positioned(
-                          right: 0,
-                          top: 0,
-                          child: AppIcon(
-                            icon: Icons.circle,
-                            size: 20,
-                            iconColor: Colors.transparent,
-                            backgroundColor: AppColors.mainColor,
-                          ),
-                        )
-                      : Container(),
-                  Get.find<PopularProductController>().totalItems >= 1
-                      ? Positioned(
-                          right: 6,
-                          top: 1,
-                          child: BigText(
-                            text: Get.find<PopularProductController>()
-                                .totalItems
-                                .toString(),
-                            size: 12,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Container(),
-                ],
-              );
+              return GestureDetector(
+                  onTap: () {
+                    if (Controller.totalItems >= 1)
+                      Get.toNamed(RouteHeloer.getCartPage());
+                  },
+                  child: Stack(
+                    children: [
+                      AppIcon(icon: Icons.shopping_cart_outlined),
+                      Get.find<PopularProductController>().totalItems >= 1
+                          ? Positioned(
+                              right: 0,
+                              top: 0,
+                              child: AppIcon(
+                                icon: Icons.circle,
+                                size: 20,
+                                iconColor: Colors.transparent,
+                                backgroundColor: AppColors.mainColor,
+                              ),
+                            )
+                          : Container(),
+                      Get.find<PopularProductController>().totalItems >= 1
+                          ? Positioned(
+                              right: 6,
+                              top: 1,
+                              child: BigText(
+                                text: Get.find<PopularProductController>()
+                                    .totalItems
+                                    .toString(),
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  ));
             })
           ]),
           bottom: PreferredSize(

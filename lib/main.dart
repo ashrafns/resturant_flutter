@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:returant_flutter/Pages/cart/cart_page.dart';
 import 'package:returant_flutter/Pages/home/food_page_body.dart';
 import 'package:returant_flutter/Pages/home/main_food_page.dart';
 import 'package:returant_flutter/controllers/recommended_product_controller.dart';
@@ -29,8 +30,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainFoodPage(),
-      initialRoute: RouteHeloer.initial,
+      // home: MainFoodPage(),
+      initialRoute: RouteHeloer.getInitial(),
       getPages: RouteHeloer.routes,
     );
   }
