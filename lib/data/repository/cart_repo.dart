@@ -67,7 +67,7 @@ class CartRepo {
     sharedPreferences.setStringList(
         AppConstants.CART_HISTORY_LIST, cartHistory);
 
-    print('getCartHistoryList ' + getCartHistoryList().length.toString());
+    // print('getCartHistoryList ' + getCartHistoryList().length.toString());
 
     // print('getCartHistoryList ' + getCartHistoryList()[j].time.toString());
    
