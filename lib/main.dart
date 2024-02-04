@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:returant_flutter/Pages/cart/cart_page.dart';
-import 'package:returant_flutter/Pages/home/food_page_body.dart';
-import 'package:returant_flutter/Pages/home/main_food_page.dart';
-import 'package:returant_flutter/controllers/recommended_product_controller.dart';
-import 'package:returant_flutter/routes/route_helper.dart';
+import '../Pages/cart/cart_page.dart';
+import '../Pages/home/food_page_body.dart';
+import '../Pages/home/main_food_page.dart';
+import '../Pages/splash/splash_page.dart';
+import '../controllers/cart_contoller.dart';
+import '../controllers/recommended_product_controller.dart';
+import '../routes/route_helper.dart';
 import 'Pages/food/recommended_food_detail.dart';
 import 'controllers/popular_product_controller.dart';
 import 'heloer/dependencies.dart' as dep;
@@ -21,18 +23,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>().getPopularProductList();
-    Get.find<RecommendedProductController>().getRecommendedProductList();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      // home: MainFoodPage(),
-      initialRoute: RouteHeloer.getInitial(),
-      getPages: RouteHeloer.routes,
-    );
+    Get.find<CartController>().getCartData();
+    return GetBuilder<PopularProductController>(builder: (_) {
+      return GetBuilder<RecommendedProductController>(builder: (_) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          // home: SplashScreen(),
+          initialRoute: RouteHeloer.getSplashPage(),
+          getPages: RouteHeloer.routes,
+        );
+      });
+    });
   }
 }

@@ -34,10 +34,10 @@ class PopularProductController extends GetxController {
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
       _quantity = checkQuantity(_quantity + 1);
-      print(_quantity);
+      
     } else {
       _quantity = checkQuantity(_quantity - 1);
-      print(_quantity);
+      
     }
     update();
   }
@@ -76,11 +76,11 @@ class PopularProductController extends GetxController {
     exist = _cart.existInCart(product);
     // if exist
     // get from storge _inCartItem=3
-    print(exist.toString());
+    // print(exist.toString());
     if (exist) {
       _inCartItems = _cart.getQuantity(product);
     }
-    print('the quantity is ' + _inCartItems.toString());
+    // print('the quantity is ' + _inCartItems.toString());
   }
 
   void addItem(ProductModel product) {
@@ -88,7 +88,7 @@ class PopularProductController extends GetxController {
     _quantity = 0;
     _inCartItems = _cart.getQuantity(product);
     _cart.items.forEach((key, value) {
-      print(value.id.toString() + value.quantity.toString());
+      // print(value.id.toString() + value.quantity.toString());
     });
     update();
   }

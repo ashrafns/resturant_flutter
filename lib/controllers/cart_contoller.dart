@@ -13,6 +13,9 @@ class CartController extends GetxController {
 
   Map<int, CartModel> get items => _items;
 
+  // only for local storge and sharedpreferance
+  List<CartModel> storgeItems = [];
+
   void addItem(ProductModel product, int quantity) {
     var totalQuantity = 0;
     if (_items.containsKey(product.id)) {
@@ -55,6 +58,7 @@ class CartController extends GetxController {
         );
       }
     }
+    cartRepo.addToCartList(getItems);
     update();
   }
 
@@ -97,5 +101,32 @@ class CartController extends GetxController {
       total += value.quantity! * value.price!;
     });
     return total;
+  }
+
+  List<CartModel> getCartData() {
+    setCart = cartRepo.getCartList();
+
+    return storgeItems;
+  }
+
+  set setCart(List<CartModel> items) {
+    storgeItems = items;
+    for (int i = 0; i < storgeItems.length; i++) {
+      _items.putIfAbsent(storgeItems[i].product!.id!, () => storgeItems[i]);
+    }
+  }
+
+  void addToHistory() {
+    cartRepo.addToCartHistoryList();
+    clear();
+  }
+
+  void clear() {
+    _items = {};
+    update();
+  }
+
+  List<CartModel> getCartHistoryList() {
+    return cartRepo.getCartHistoryList();
   }
 }

@@ -107,6 +107,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ),
           ]),
         ),
+        
         //recommended food
         // list of food and image
         GetBuilder<RecommendedProductController>(builder: (recommendedProduct) {
